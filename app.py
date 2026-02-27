@@ -1,9 +1,8 @@
 import hashlib
 import time
 from flask import Flask, request, render_template, redirect, url_for, session
-from flask_sqlalchemy import SQLAlchemy
-from werkzeug.security import generate_password_hash, check_password_hash
-import uuid
+from db import db          # Import the db object
+from models import User    # Import your User table
 import re
 
 app = Flask(__name__)
