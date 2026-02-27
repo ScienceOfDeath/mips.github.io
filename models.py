@@ -17,3 +17,15 @@ class User(db.Model):
 
     def check_password(self, password):
         return check_password_hash(self.password_hash, password)
+
+class EncryptedFile(db.Model):
+    __tablename__ = 'encrypted_files'
+    
+    id = db.Column(db.String(36), primary_key=True, default=lambda: str(uuid.uuid4()))
+    filename = db.Column(db.String(255), nullable=False)
+    
+    # db.LargeBinary tells PostgreSQL to use the BYTEA data type for raw bytes
+    file_data = db.Column(db.LargeBinary, nullable=False) 
+    
+    #Keep track of who uploaded it
+    uploader_id = db.Column(db.String(36), db.ForeignKey('users.id'), nullable=False)
