@@ -15,8 +15,12 @@ login_manager.login_view = 'login'
 def load_user(user_id):
     return User.query.get(int(user_id))
 
-@app.route('/signup', methods=['GET', 'POST'])
-def signup():
+@app.route('/')
+def home():
+    return redirect(url_for('login'))
+
+@app.route('/register', methods=['GET', 'POST'])
+def register():
     if request.method == 'POST':
         username = request.form.get('username')
         password = request.form.get('password')
@@ -28,7 +32,7 @@ def signup():
         db.session.add(new_user)
         db.session.commit()
         return redirect(url_for('login'))
-    return render_template('signup.html')
+    return render_template('register.html')
 
 @app.route('/login', methods=['GET', 'POST'])
 def login():
